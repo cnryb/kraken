@@ -16,10 +16,10 @@ jobs:
 #       设置 bridge 编译环境
       - uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: '16'
       - uses: jwlawson/actions-setup-cmake@v1.11
         with:
-          cmake-version: '3.21.x'
+          cmake-version: '3.22.x'
           
       - run: npm i
       - run: npm run build:bridge:linux:release
@@ -34,7 +34,8 @@ jobs:
               sudo apt-get install ninja-build pkg-config libgtk-3-dev -y
       - run: flutter doctor -v 
 
-      - run: |
+      - name: linux app build
+        run: |
               cd kraken/
               flutter pub get
               cd example/

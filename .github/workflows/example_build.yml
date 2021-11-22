@@ -16,10 +16,10 @@ jobs:
 #       设置 bridge 编译环境
       - uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: '16'
       - uses: jwlawson/actions-setup-cmake@v1.11
         with:
-          cmake-version: '3.21.x'
+          cmake-version: '3.22.x'
       - run: npm i
       
       
@@ -32,7 +32,7 @@ jobs:
       - run: flutter config --enable-macos-desktop 
       - run: flutter doctor -v 
       
-      - name: android build
+      - name: android app build
         run: |
               npm run build:bridge:android:release
               cd kraken/
@@ -40,7 +40,7 @@ jobs:
               cd example/
               flutter build apk --release  
 
-      - name: macos build
+      - name: macos app build
         run: |
               npm run build:bridge:macos:release
               cd kraken/
@@ -48,7 +48,7 @@ jobs:
               cd example/
               flutter build macos --release
 
-      - name: ios build              
+      - name: ios app build              
       - run: |
               npm run build:bridge:ios:release  
               cd kraken/
