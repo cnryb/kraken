@@ -32,8 +32,8 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           flutter-version: '2.2.3'
-      - run: flutter config --enable-macos-desktop 
-      - run: flutter doctor --android-licenses
+      # - run: flutter config --enable-macos-desktop 
+      # - run: flutter doctor --android-licenses
       - run: flutter doctor -v 
       
       - run: |
