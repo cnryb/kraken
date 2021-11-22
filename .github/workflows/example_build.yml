@@ -23,7 +23,7 @@ jobs:
           
       - run: npm i
       # - run: npm run build:bridge:android:release
-#       - run: npm run build:bridge:macos:release
+      - run: npm run build:bridge:macos:release
       - run: npm run build:bridge:ios:release  
       
       # - run: npm run build:bridge:all:release
@@ -33,7 +33,6 @@ jobs:
         with:
           flutter-version: '2.2.3'
       - run: flutter config --enable-macos-desktop 
-      - run: flutter config --enable-linux-desktop 
       
       # - run: |
       #         cd kraken/
@@ -41,12 +40,12 @@ jobs:
       #         cd example/
       #         flutter build apk --release  # 编译不通过
 
-      # - name: build macos
-      #   run: |
-      #         cd kraken/
-      #         flutter pub get
-      #         cd example/
-      #         flutter build macos --release
+      - name: build macos
+        run: |
+              cd kraken/
+              flutter pub get
+              cd example/
+              flutter build macos --release
               
       - run: |
               cd kraken/
