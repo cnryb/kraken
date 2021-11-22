@@ -563,30 +563,33 @@ task('build-ios-frameworks', (done) => {
   done();
 });
 
-task('build-linux-kraken-lib', (done) => {
+task('build-linux-arm64-kraken-lib', (done) => {
+
+  const archs = ['arm64'];
   const buildType = buildMode == 'Release' ? 'Release' : 'Relwithdebinfo';
   const cmakeGeneratorTemplate = platform == 'win32' ? 'Ninja' : 'Unix Makefiles';
- 
-  const soBinaryDirectory = path.join(paths.bridge, `build/linux/lib/`);
-  const bridgeCmakeDir = path.join(paths.bridge, 'cmake-build-linux');
-  // generate project
-  execSync(`cmake -DCMAKE_BUILD_TYPE=${buildType} \
-  ${isProfile ? '-DENABLE_PROFILE=TRUE \\' : '\\'}
-  -G "${cmakeGeneratorTemplate}" \
-  -B ${paths.bridge}/cmake-build-linux -S ${paths.bridge}`,
-    {
-      cwd: paths.bridge,
-      stdio: 'inherit',
-      env: {
-        ...process.env,
-        KRAKEN_JS_ENGINE: targetJSEngine,
-        LIBRARY_OUTPUT_DIR: soBinaryDirectory
-      }
-    });
+  archs.forEach(arch => {
+    const soBinaryDirectory = path.join(paths.bridge, `build/linux/lib/${arch}`);
+    const bridgeCmakeDir = path.join(paths.bridge, 'cmake-build-linux-' + arch);
+    // generate project
+    execSync(`cmake -DCMAKE_BUILD_TYPE=${buildType} \
+    ${isProfile ? '-DENABLE_PROFILE=TRUE \\' : '\\'}
+    -G "${cmakeGeneratorTemplate}" \
+    -B ${paths.bridge}/cmake-build-linux-${arch} -S ${paths.bridge}`,
+      {
+        cwd: paths.bridge,
+        stdio: 'inherit',
+        env: {
+          ...process.env,
+          KRAKEN_JS_ENGINE: targetJSEngine,
+          LIBRARY_OUTPUT_DIR: soBinaryDirectory
+        }
+      });
 
-  // build
-  execSync(`cmake --build ${bridgeCmakeDir} --target kraken -- -j 12`, {
-    stdio: 'inherit'
+    // build
+    execSync(`cmake --build ${bridgeCmakeDir} --target kraken -- -j 12`, {
+      stdio: 'inherit'
+    });
   });
 
   done();

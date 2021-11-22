@@ -44,5 +44,3 @@ flutter:
         pluginClass: KrakenPlugin
       macos:
         pluginClass: KrakenPlugin
-      linux:
-        pluginClass: KrakenPlugin
