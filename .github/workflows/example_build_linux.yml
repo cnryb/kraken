@@ -14,30 +14,26 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 #       设置 bridge 编译环境
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-      - uses: jwlawson/actions-setup-cmake@v1.11
-        with:
-          cmake-version: '3.21.x'
+      # - uses: actions/setup-node@v2
+      #   with:
+      #     node-version: '14'
+      # - uses: jwlawson/actions-setup-cmake@v1.11
+      #   with:
+      #     cmake-version: '3.21.x'
           
-      - run: npm i
-      - run: npm run build:bridge:linux:release
-#       - run: npm run build:bridge:macos:release
-#       - run: npm run build:bridge:ios:release  
-      
-#       - run: npm run build:bridge:all:release
-      
+      # - run: npm i
+      # - run: npm run build:bridge:linux:release
+
 #       设置 flutter 环境
       - uses: subosito/flutter-action@v1
         with:
           flutter-version: '2.2.3'
       - run: flutter config --enable-linux-desktop 
-      
-      - run: |
-              cd kraken/
-              flutter pub get
-              cd example/
-              flutter build linux --release  # 编译不通过
+      - run: flutter doctor -v 
+      # - run: |
+      #         cd kraken/
+      #         flutter pub get
+      #         cd example/
+      #         flutter build linux --release  # 编译不通过
 
 
