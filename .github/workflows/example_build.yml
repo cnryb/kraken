@@ -33,13 +33,14 @@ jobs:
         with:
           flutter-version: '2.2.3'
       - run: flutter config --enable-macos-desktop 
+      - run: flutter doctor --android-licenses
       - run: flutter doctor -v 
       
-      # - run: |
-      #         cd kraken/
-      #         flutter pub get
-      #         cd example/
-      #         flutter build apk --release  # 编译不通过
+      - run: |
+              cd kraken/
+              flutter pub get
+              cd example/
+              flutter build apk --release  # 编译不通过
 
       # - name: build macos
       #   run: |
