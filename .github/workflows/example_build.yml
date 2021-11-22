@@ -49,7 +49,7 @@ jobs:
               flutter build macos --release
 
       - name: ios app build              
-      - run: |
+        run: |
               npm run build:bridge:ios:release  
               cd kraken/
               flutter pub get
