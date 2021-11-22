@@ -22,7 +22,7 @@ jobs:
           cmake-version: '3.21.x'
           
       - run: npm i
-      - run: npm run build:bridge:linux_arm64:release
+      - run: npm run build:bridge:linux:release
 #       - run: npm run build:bridge:macos:release
 #       - run: npm run build:bridge:ios:release  
       
