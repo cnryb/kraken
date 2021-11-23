@@ -7,6 +7,12 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+env:
+  nodeVersion: '16'
+  cmakeVersion: '3.22.x'
+  flutterVersion: '2.2.3'
+
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -16,10 +22,10 @@ jobs:
 #       设置 bridge 编译环境
       - uses: actions/setup-node@v2
         with:
-          node-version: '16'
+          node-version: ${{ env.nodeVersion }}
       - uses: jwlawson/actions-setup-cmake@v1.11
         with:
-          cmake-version: '3.22.x'
+          cmake-version: ${{ env.cmakeVersion }}
           
       - run: npm i
       - run: npm run build:bridge:linux:release
@@ -27,7 +33,7 @@ jobs:
 #       设置 flutter 环境
       - uses: subosito/flutter-action@v1
         with:
-          flutter-version: '2.2.3'
+          flutter-version: ${{ env.flutterVersion }}
       - run: flutter config --enable-linux-desktop 
       - run: |
               sudo apt-get update
