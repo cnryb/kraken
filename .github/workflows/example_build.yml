@@ -26,19 +26,16 @@ jobs:
         with:
           cmake-version: ${{ env.cmakeVersion }}
       - run: npm i
-
-      # - run: npm run build:bridge:all:release
+      - run: npm run build:bridge:android:release
 
       #       设置 flutter 环境
       - uses: subosito/flutter-action@v1
         with:
           flutter-version: ${{ env.flutterVersion }}
-      - run: flutter config --enable-macos-desktop
       - run: flutter doctor -v
 
       - name: android app build
         run: |
-          npm run build:bridge:android:release
           cd kraken/
           flutter pub get
           cd example/
@@ -56,16 +53,15 @@ jobs:
         with:
           cmake-version: ${{ env.cmakeVersion }}
       - run: npm i
+      - run: npm run build:bridge:ios:release
 
       - uses: subosito/flutter-action@v1
         with:
           flutter-version: ${{ env.flutterVersion }}
-      - run: flutter config --enable-macos-desktop
       - run: flutter doctor -v
 
       - name: ios app build
         run: |
-          npm run build:bridge:ios:release  
           cd kraken/
           flutter pub get
           cd example/
@@ -83,6 +79,7 @@ jobs:
         with:
           cmake-version: ${{ env.cmakeVersion }}
       - run: npm i
+      - run: npm run build:bridge:macos:release
 
       - uses: subosito/flutter-action@v1
         with:
@@ -92,7 +89,6 @@ jobs:
 
       - name: macos app build
         run: |
-          npm run build:bridge:macos:release
           cd kraken/
           flutter pub get
           cd example/
@@ -127,3 +123,29 @@ jobs:
           flutter pub get
           cd example/
           flutter build linux --release
+
+  build_android-app_in_ubuntu:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.nodeVersion }}
+      - uses: jwlawson/actions-setup-cmake@v1.11
+        with:
+          cmake-version: ${{ env.cmakeVersion }}
+
+      - run: npm i
+      - run: npm run build:bridge:android:release
+
+      - uses: subosito/flutter-action@v1
+        with:
+          flutter-version: ${{ env.flutterVersion }}
+      - run: flutter doctor -v
+      - name: android app build
+        run: |
+          cd kraken/
+          flutter pub get
+          cd example/
+          flutter build apk --release
